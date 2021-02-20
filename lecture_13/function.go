@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+/*
 //***method-1***
 func add(x int, y int) int{
 	z := x+y
@@ -22,8 +23,15 @@ func add4(x int, y int) (z int){
 	z = x+y
 	return
 }
+*/
+func rectangle(l int, b int) (area int, parameter int) {
+	parameter = 2 * (l + b)
+	area = l * b
+	return // Return statement without specify variable name
+}
 
 func main(){
+	/*
 	sum1 := add(10,30)
 	fmt.Println(sum1)
 	sum2 := add(5,8)
@@ -32,4 +40,10 @@ func main(){
 	fmt.Println(sum3)
 	sum4 := add(20,30)
 	fmt.Println(sum4)
+	*/
+
+	var a, p int
+	a, p = rectangle(20, 30)
+	fmt.Println("Area:", a)
+	fmt.Println("Parameter:", p)
 }
