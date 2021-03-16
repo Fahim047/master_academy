@@ -1,36 +1,41 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"html/template"
 	"net/http"
+	"os"
 
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/mateors/mcb"
 )
 
-var db *sql.DB
+var db *mcb.DB
 var err error
+
+// same as mysql table schema/structure
+type RequestTable struct {
+	ID      string `json:"aid"`
+	Name    string `json:"name"`
+	Company string `json:"company"`
+	Email   string `json:"email"`
+	Type    string `json:"type"`
+	Status  int    `json:"status"`
+}
 
 func init() {
 	// Open up our database connection.
-	// I've set up a database on my local machine using phpmyadmin.
-	// The database is called testDb
-	db, err = sql.Open("mysql", "root:904977@tcp(127.0.0.1:3306)/hosting_db")
 
-	// if there is an error opening the connection, handle it
+	// Couchbase Database Connection Part
+
+	db = mcb.Connect("localhost", "fahim047", "904977")
+
+	res, err := db.Ping()
 	if err != nil {
-		panic(err.Error())
+
+		fmt.Println(res)
+		os.Exit(1)
 	}
-
-	// defer the close till after the main function has finished
-	// executing
-	//defer db.Close()
-	fmt.Println("database connection successful")
-
-	// insert, err := db.Query("INSERT INTO `request` (`id`, `name`, `company`,`email`,`status`) VALUES (NULL, 'Fahim', 'ABC', 'fahimulislam58@gmail.com','1');")
-
-	// defer insert.Close()
+	fmt.Println(res, err)
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
@@ -75,35 +80,22 @@ func docs(w http.ResponseWriter, r *http.Request) {
 
 func request(w http.ResponseWriter, r *http.Request) {
 
-	// Form Handling Method-1
+	// for inserting data into couchbase bucket
 
-	name := r.FormValue("name")
-	company := r.FormValue("company")
-	email := r.FormValue("email")
+	r.ParseForm()
 
-	// fmt.Println(name, company, email)
+	for key, val := range r.Form {
 
-	// fmt.Fprintf(w, `received %s %s %s`, name, company, email)
-
-	// Form Handling Method-2
-
-	// r.ParseForm()
-
-	// for key, val := range r.Form {
-
-	// 	fmt.Println(key, val)
-	// }
-
-	qs := "INSERT INTO `request` (`id`, `name`, `company`,`email`,`status`) VALUES (NULL, '%s', '%s', '%s','1');"
-	sql := fmt.Sprintf(qs, name, company, email)
-
-	// fmt.Println(sql)
-
-	insert, err := db.Query(sql)
-	if err != nil {
-		panic(err.Error())
+		fmt.Println(key, val)
 	}
-	defer insert.Close()
+	var reqTable RequestTable
+
+	r.Form.Add("bucket", "master_academy")
+	r.Form.Add("aid", "request::5")
+	r.Form.Add("type", "request")
+	r.Form.Add("status", "1")
+	pRes := db.Insert(r.Form, &reqTable)
+	fmt.Println(pRes.Status, pRes.Errors)
 
 	fmt.Fprintf(w, `OK`)
 }
