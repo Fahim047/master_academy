@@ -31,16 +31,22 @@ func main() {
 	// isErr := CreateFile("rian.txt", "This is second test file. Rian is my bajan.")
 	// fmt.Println(isErr)
 
-	fInfo, err := os.Stat("master_academy.txt")
+	// fInfo, err := os.Stat("master_academy.txt")
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// }
+
+	// fmt.Println(fInfo.IsDir())
+	// fmt.Println(fInfo.ModTime().Date())
+	// fmt.Println(fInfo.ModTime().Clock())
+	// fmt.Println(fInfo.Name())
+	// fmt.Println(fInfo.Size())
+
+	// How to make a folder
+	err := os.Mkdir("Test_Folder", 764)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-
-	fmt.Println(fInfo.IsDir())
-	fmt.Println(fInfo.ModTime().Date())
-	fmt.Println(fInfo.ModTime().Clock())
-	fmt.Println(fInfo.Name())
-	fmt.Println(fInfo.Size())
 }
 
 // creating file using function
