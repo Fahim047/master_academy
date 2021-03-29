@@ -41,12 +41,28 @@ func main() {
 	// fmt.Println(fInfo.ModTime().Clock())
 	// fmt.Println(fInfo.Name())
 	// fmt.Println(fInfo.Size())
-
+	// -------------------------------------------------------------------------------------
 	// How to make a folder
-	err := os.Mkdir("Test_Folder", 764)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+	// err := os.Mkdir("Test_Folder", 764)
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// }
+	// -------------------------------------------------------------------------------------
+	// base := filepath.Base(dir)
+	// relativePath := filepath.Join("Test_Folder")
+	// absolutePath, err := filepath.Abs("Test_Folder")
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// }
+
+	// newPath := filepath.Join(absolutePath, "..", "..", "lecture_24_test")
+
+	// fmt.Println(base)
+	// fmt.Println(relativePath)
+	// fmt.Println(absolutePath)
+	// fmt.Println(newPath)
+
+	os.Mkdir(`F:\GO_WORKSPACE\src\Master_Academy\lecture_24_test2`, 777)
 }
 
 // creating file using function
