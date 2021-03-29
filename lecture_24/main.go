@@ -28,8 +28,19 @@ func main() {
 	// --------------------------------------------------------------------------------------
 	
 	// calling createFile function
-	isErr := CreateFile("rian.txt", "This is second test file. Rian is my bajan.")
-	fmt.Println(isErr)
+	// isErr := CreateFile("rian.txt", "This is second test file. Rian is my bajan.")
+	// fmt.Println(isErr)
+
+	fInfo, err := os.Stat("master_academy.txt")
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	fmt.Println(fInfo.IsDir())
+	fmt.Println(fInfo.ModTime().Date())
+	fmt.Println(fInfo.ModTime().Clock())
+	fmt.Println(fInfo.Name())
+	fmt.Println(fInfo.Size())
 }
 
 // creating file using function
