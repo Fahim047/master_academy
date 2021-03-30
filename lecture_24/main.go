@@ -62,7 +62,7 @@ func main() {
 	// fmt.Println(absolutePath)
 	// fmt.Println(newPath)
 
-	os.Mkdir(`F:\GO_WORKSPACE\src\Master_Academy\lecture_24_test2`, 777)
+	os.Mkdir(`F:\GO_WORKSPACE\src\Master_Academy\lecture_25`, 777)
 }
 
 // creating file using function
